@@ -16,3 +16,7 @@ let mutable library = [
     { Title = "Book 1"; Author = "Author 1"; Genre = "Fiction"; IsBorrowed = false; BorrowDate = None }
     { Title = "Book 2"; Author = "Author 2"; Genre = "Science"; IsBorrowed = true; BorrowDate = Some(DateTime.Now.AddDays(-5.0)) }
 ]
+
+// Helper Functions
+let addBook title author genre =
+    library <- { Title = title; Author = author; Genre = genre; IsBorrowed = false; BorrowDate = None } :: library
