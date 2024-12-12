@@ -24,3 +24,18 @@ let addBook title author genre =
 let searchBooks title =
     library |> List.filter (fun book -> book.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)
 
+let getAvailableBooks () =
+    library |> List.filter (fun book -> not book.IsBorrowed)
+
+let getBorrowedBooks () =
+    library |> List.filter (fun book -> book.IsBorrowed)
+
+let getAllBooks () =
+    library 
+    |> List.map (fun book ->
+        if book.IsBorrowed then
+            $"{book.Title} by {book.Author} (Borrowed on {book.BorrowDate.Value.ToShortDateString()})"
+        else
+            $"{book.Title} by {book.Author} (Available)"
+    )
+    |> String.concat "\n"
