@@ -24,23 +24,7 @@ let addBook title author genre =
 let searchBooks title =
     library |> List.filter (fun book -> book.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)
 
-let getAvailableBooks () =
-    library |> List.filter (fun book -> not book.IsBorrowed)
-
-let getBorrowedBooks () =
-    library |> List.filter (fun book -> book.IsBorrowed)
-
-let getAllBooks () =
-    library 
-    |> List.map (fun book ->
-        if book.IsBorrowed then
-            $"{book.Title} by {book.Author} (Borrowed on {book.BorrowDate.Value.ToShortDateString()})"
-        else
-            $"{book.Title} by {book.Author} (Available)"
-    )
-    |> String.concat "\n"
-
-    let borrowBook title =
+let borrowBook title =
     let mutable borrowed = false
     library <- 
         library |> List.map (fun book ->
@@ -67,6 +51,22 @@ let returnBook title =
         MessageBox.Show($"You have successfully returned '{title}'!") |> ignore
     else
         MessageBox.Show("Book is already available or not found!") |> ignore
+
+let getAvailableBooks () =
+    library |> List.filter (fun book -> not book.IsBorrowed)
+
+let getBorrowedBooks () =
+    library |> List.filter (fun book -> book.IsBorrowed)
+
+let getAllBooks () =
+    library 
+    |> List.map (fun book ->
+        if book.IsBorrowed then
+            $"{book.Title} by {book.Author} (Borrowed on {book.BorrowDate.Value.ToShortDateString()})"
+        else
+            $"{book.Title} by {book.Author} (Available)"
+    )
+    |> String.concat "\n"
 
 // Form Setup
 let form = new Form(Text = "Library Management System", Width = 800, Height = 600, StartPosition = FormStartPosition.CenterScreen)
